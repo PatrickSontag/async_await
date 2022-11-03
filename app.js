@@ -30,32 +30,38 @@ async function numberTrivia(num=favNumber) {
 }
 
 
-function cardsAPI() {
-    axios
-        // .get(`${baseCardsURL}/deck/new/shuffle/?deck_count=1`)
-        .get(`${baseCardsURL}/deck/new/draw/?count=1`)
-        .then(d1c1 => {
-            console.log("from deck call:", d1c1.data.cards[0].code);
-            return axios.get(`${baseCardsURL}/deck/new/shuffle/?deck_count=1`)
-            // console.log(d.data.deck_id);
-            // let deck = d.data.deck_id;
-            // return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
-        })
-        .then(d2 => {
-            console.log(d2.data.deck_id);
-            deck = d2.data.deck_id;
-            return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
-        })
-        .then(d2c1 => {
-            console.log(d2c1.data.cards[0].code);
-            // let deck = c1.data.cards.code;
-            return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
-        })
-        .then(d2c2 => {
-            console.log(d2c2.data.cards[0].code);
-            return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
-        })
+async function cardsAPI() {
+    let d1c1 = await axios.get(`${baseCardsURL}/deck/new/draw/?count=1`)
+    let d2 = await axios.get(`${baseCardsURL}/deck/new/shuffle/?deck_count=1`)
+    deck = d2.data.deck_id;
+    let d2c1 = await axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+    let d2c2 = await axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+    let d2c3 = await axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+    console.log(d1c1.data.cards[0].code);
+    console.log("deck ID:", d2.data.deck_id);
+    console.log(d2c1.data.cards[0].code);
+    console.log(d2c2.data.cards[0].code);
 }
+//     axios
+//         .get(`${baseCardsURL}/deck/new/draw/?count=1`)
+//         .then(d1c1 => {
+//             console.log("from deck call:", d1c1.data.cards[0].code);
+//             return axios.get(`${baseCardsURL}/deck/new/shuffle/?deck_count=1`)
+//         })
+//         .then(d2 => {
+//             console.log(d2.data.deck_id);
+//             deck = d2.data.deck_id;
+//             return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+//         })
+//         .then(d2c1 => {
+//             console.log(d2c1.data.cards[0].code);
+//             return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+//         })
+//         .then(d2c2 => {
+//             console.log(d2c2.data.cards[0].code);
+//             return axios.get(`${baseCardsURL}/deck/${deck}/draw/?count=1`)
+//         })
+// }
 
 addEventListener('load', () => {
     console.log("eventListener Page Load");
